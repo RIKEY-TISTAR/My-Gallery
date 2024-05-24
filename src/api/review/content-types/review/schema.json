@@ -1,0 +1,33 @@
+{
+  "kind": "collectionType",
+  "collectionName": "reviews",
+  "info": {
+    "singularName": "review",
+    "pluralName": "reviews",
+    "displayName": "review"
+  },
+  "options": {
+    "draftAndPublish": true
+  },
+  "pluginOptions": {},
+  "attributes": {
+    "name": {
+      "type": "string",
+      "required": true
+    },
+    "data": {
+      "type": "time",
+      "required": true
+    },
+    "description": {
+      "type": "richtext",
+      "required": true
+    },
+    "kartiny": {
+      "type": "relation",
+      "relation": "manyToOne",
+      "target": "api::picture.picture",
+      "inversedBy": "reviews"
+    }
+  }
+}

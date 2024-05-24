@@ -362,6 +362,82 @@ export interface AdminTransferTokenPermission extends Schema.CollectionType {
   };
 }
 
+export interface ApiPicturePicture extends Schema.CollectionType {
+  collectionName: 'pictures';
+  info: {
+    singularName: 'picture';
+    pluralName: 'pictures';
+    displayName: '\u043A\u0430\u0440\u0442\u0438\u043D\u044B';
+    description: '';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    image: Attribute.Media & Attribute.Required;
+    name: Attribute.String & Attribute.Required;
+    description: Attribute.RichText & Attribute.Required;
+    slug: Attribute.UID<'api::picture.picture', 'name'> & Attribute.Required;
+    reviews: Attribute.Relation<
+      'api::picture.picture',
+      'oneToMany',
+      'api::review.review'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::picture.picture',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::picture.picture',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
+export interface ApiReviewReview extends Schema.CollectionType {
+  collectionName: 'reviews';
+  info: {
+    singularName: 'review';
+    pluralName: 'reviews';
+    displayName: 'review';
+  };
+  options: {
+    draftAndPublish: true;
+  };
+  attributes: {
+    name: Attribute.String & Attribute.Required;
+    data: Attribute.Time & Attribute.Required;
+    description: Attribute.RichText & Attribute.Required;
+    kartiny: Attribute.Relation<
+      'api::review.review',
+      'manyToOne',
+      'api::picture.picture'
+    >;
+    createdAt: Attribute.DateTime;
+    updatedAt: Attribute.DateTime;
+    publishedAt: Attribute.DateTime;
+    createdBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+    updatedBy: Attribute.Relation<
+      'api::review.review',
+      'oneToOne',
+      'admin::user'
+    > &
+      Attribute.Private;
+  };
+}
+
 export interface PluginUploadFile extends Schema.CollectionType {
   collectionName: 'files';
   info: {
@@ -798,6 +874,8 @@ declare module '@strapi/types' {
       'admin::api-token-permission': AdminApiTokenPermission;
       'admin::transfer-token': AdminTransferToken;
       'admin::transfer-token-permission': AdminTransferTokenPermission;
+      'api::picture.picture': ApiPicturePicture;
+      'api::review.review': ApiReviewReview;
       'plugin::upload.file': PluginUploadFile;
       'plugin::upload.folder': PluginUploadFolder;
       'plugin::content-releases.release': PluginContentReleasesRelease;
